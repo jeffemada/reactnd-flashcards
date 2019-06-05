@@ -1,22 +1,17 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import DeckList from './components/DeckList';
+import DeckDetail from './components/DeckDetail';
+import Quiz from './components/Quiz';
+import NewDeck from './components/NewDeck';
+import NewCard from './components/NewCard';
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <DeckList />
+      <View style={{ flex: 1 }}>
+        <NewCard />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});

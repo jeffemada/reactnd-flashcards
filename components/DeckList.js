@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-import { addCardToDeck, getDeck, getDecks, saveDeck } from '../utils/api';
-import { Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Deck from './Deck';
+import { gray } from '../utils/colors';
 
 class DeckList extends Component {
   render() {
-
     return (
-      <View>
-        <Text>DeckList component</Text>
+      <View style={styles.container}>
+        <Deck />
+        <Deck />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: gray,
+    padding: 15
+  }
+});
 
 export default DeckList;
