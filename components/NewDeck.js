@@ -26,48 +26,48 @@ class NewDeck extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: white,
+    flex: 1,
     padding: 15
   },
   newDeck: {
-    justifyContent: 'center',
     alignItems: 'stretch',
     backgroundColor: white,
     flex: 1,
-    padding: 20,
-    marginTop: 10
+    justifyContent: 'center',
+    marginTop: 10,
+    padding: 20
   },
   question: {
     fontSize: 26,
     textAlign: 'center'
   },
   input: {
-    borderWidth: 1,
     borderColor: gray,
+    borderWidth: 1,
     fontSize: 20,
-    padding: 6,
-    marginTop: 5
+    marginTop: 5,
+    padding: 6
   },
   buttonsContainer: {
     alignItems: 'center',
     backgroundColor: white,
-    padding: 20,
-    marginTop: 30
+    marginTop: 30,
+    padding: 20
   },
   button: {
-    padding: 10,
+    backgroundColor: black,
+    borderRadius: 2,
     margin: 5,
     height: 45,
-    width: 160,
-    borderRadius: 2,
     justifyContent: 'center',
-    backgroundColor: black
+    padding: 10,
+    width: 160
   },
   buttonText: {
+    color: white,
     fontSize: 22,
-    textAlign: 'center',
-    color: white
+    textAlign: 'center'
   }
 });
 

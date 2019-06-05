@@ -10,7 +10,7 @@ class Deck extends Component {
           <Text style={{ fontSize: 26 }}>Deck1</Text>
         </View>
         <View>
-          <Text style={{ fontSize: 20, color: gray }}>3 cards</Text>
+          <Text style={styles.numCardsText}>3 cards</Text>
         </View>
       </View>
     );
@@ -24,6 +24,10 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     padding: 20,
     marginTop: 10
+  },
+  numCardsText: {
+    color: gray,
+    fontSize: 20
   }
 });
 

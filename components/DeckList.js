@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { lightGray } from '../utils/colors';
 import Deck from './Deck';
-import { gray } from '../utils/colors';
 
 class DeckList extends Component {
   render() {
@@ -16,8 +16,8 @@ class DeckList extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: lightGray,
     flex: 1,
-    backgroundColor: gray,
     padding: 15
   }
 });

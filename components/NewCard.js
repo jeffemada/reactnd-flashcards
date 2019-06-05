@@ -26,45 +26,45 @@ class NewCard extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: white,
+    flex: 1,
     padding: 15
   },
   newCard: {
-    justifyContent: 'center',
     alignItems: 'stretch',
     backgroundColor: white,
     flex: 1,
-    padding: 20,
-    marginTop: 10
+    justifyContent: 'center',
+    marginTop: 10,
+    padding: 20
   },
   input: {
-    borderWidth: 1,
     borderColor: gray,
+    borderWidth: 1,
     fontSize: 20,
-    padding: 6,
-    marginTop: 5
+    marginTop: 5,
+    padding: 6
   },
   buttonsContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: white,
-    padding: 20,
-    marginTop: 30
+    justifyContent: 'center',
+    marginTop: 30,
+    padding: 20
   },
   button: {
-    padding: 10,
-    margin: 5,
-    height: 45,
-    width: 160,
+    backgroundColor: black,
     borderRadius: 2,
+    height: 45,
     justifyContent: 'center',
-    backgroundColor: black
+    margin: 5,
+    padding: 10,
+    width: 160
   },
   buttonText: {
+    color: white,
     fontSize: 22,
-    textAlign: 'center',
-    color: white
+    textAlign: 'center'
   }
 });
 

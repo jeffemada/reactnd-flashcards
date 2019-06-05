@@ -18,7 +18,7 @@ class Quiz extends Component {
               <Text style={[styles.buttonText, styles.cardTurn]}>Answer</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.buttonsContainer}>
+          <View style={{ marginTop: 30 }}>
             <View>
               <TouchableOpacity style={[styles.button, { backgroundColor: red }]}>
                 <Text style={[styles.buttonText, { color: white }]}>Correct</Text>
@@ -38,18 +38,18 @@ class Quiz extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: white,
+    flex: 1,
     padding: 15
   },
   card: {
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: white,
     borderRadius: 2,
     flex: 1,
-    padding: 20,
-    marginTop: 10
+    justifyContent: 'center',
+    marginTop: 10,
+    padding: 20
   },
   question: {
     fontSize: 26,
@@ -59,16 +59,13 @@ const styles = StyleSheet.create({
     color: red,
     fontWeight: 'bold'
   },
-  buttonsContainer: {
-    marginTop: 30
-  },
   button: {
-    padding: 10,
-    margin: 5,
-    height: 45,
-    width: 160,
     borderRadius: 2,
-    justifyContent: 'center'
+    height: 45,
+    justifyContent: 'center',
+    margin: 5,
+    padding: 10,
+    width: 160
   },
   buttonText: {
     fontSize: 22,
