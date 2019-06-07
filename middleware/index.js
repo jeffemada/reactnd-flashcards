@@ -1,4 +1,5 @@
 import { applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 const logger = (store) => (next) => (action) => {
   console.group(action.type);
@@ -10,4 +11,4 @@ const logger = (store) => (next) => (action) => {
   return returnValue;
 };
 
-export default applyMiddleware(logger);
+export default applyMiddleware(thunk, logger);
