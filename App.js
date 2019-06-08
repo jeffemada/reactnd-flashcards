@@ -1,15 +1,11 @@
+import { Constants } from 'expo';
 import React from 'react';
 import { StatusBar, View } from 'react-native';
-import DeckList from './components/DeckList';
-import DeckDetail from './components/DeckDetail';
-import Quiz from './components/Quiz';
-import NewDeck from './components/NewDeck';
-import NewCard from './components/NewCard';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducers from './reducers';
+import Navigator from './components/Navigator';
 import middleware from './middleware';
-import { Constants } from 'expo';
+import reducers from './reducers';
 import { black } from './utils/colors';
 
 function AppStatusBar({ backgroundColor, ...props }) {
@@ -29,7 +25,7 @@ export default class App extends React.Component {
       <Provider store={createStore(reducers, middleware)}>
         <View style={{ flex: 1 }}>
           <AppStatusBar backgroundColor={black} barStyle="light-content" />
-          <DeckList />
+          <Navigator />
         </View>
       </Provider>
     );
