@@ -1,6 +1,6 @@
 import { AppLoading } from 'expo';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { receiveDecks } from '../actions';
 import { mockDecks } from '../utils/api';
@@ -20,6 +20,15 @@ class DeckList extends Component {
       .then(() => this.setState(() => ({ loading: false })));
   }
 
+  onPressDeck = (deck) => {
+    const { navigation } = this.props;
+    navigation.navigate('DeckDetail', { id: deck.title });
+  };
+
+  renderDeck = ({ item }) => {
+    return <Deck deck={item} onPress={() => this.onPressDeck(item)} />;
+  };
+
   render() {
     const { loading } = this.state;
     const { decks } = this.props;
@@ -28,9 +37,7 @@ class DeckList extends Component {
       <AppLoading />
     ) : (
       <View style={styles.container}>
-        {Object.keys(decks).map((id) => (
-          <Deck key={id} deck={decks[id]} />
-        ))}
+        <FlatList data={decks} renderItem={this.renderDeck} keyExtractor={(item) => item.title} />
       </View>
     );
   }
@@ -46,7 +53,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(decks) {
   return {
-    decks
+    decks: Object.values(decks)
   };
 }
 
