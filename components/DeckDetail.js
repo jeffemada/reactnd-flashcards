@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { gray, black, white } from '../utils/colors';
+import Deck from './Deck';
+import { connect } from 'react-redux';
 
 class DeckDetail extends Component {
   render() {
+    const { deck } = this.props;
+
     return (
       <View style={styles.container}>
         <View style={styles.deck}>
+          <Deck deck={deck} />
           <View>
-            <Text style={{ fontSize: 36 }}>Deck1</Text>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Add card</Text>
+            </TouchableOpacity>
           </View>
           <View>
-            <Text style={styles.numCardsText}>3 cards</Text>
-          </View>
-          <View style={{ marginTop: 30 }}>
-            <View>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Add card</Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Start quiz</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Start quiz</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -66,4 +63,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckDetail;
+function mapStateToProps(state, { navigation }) {
+  const { id } = navigation.state.params;
+
+  return {
+    deck: state[id]
+  };
+}
+
+export default connect(mapStateToProps)(DeckDetail);
