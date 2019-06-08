@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { gray, black, white } from '../utils/colors';
-import Deck from './Deck';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
+import { gray, white } from '../utils/colors';
+import Button from './Button';
+import Deck from './Deck';
 
 class DeckDetail extends Component {
+  onPressQuiz = () => {
+    const { deck, navigation } = this.props;
+    navigation.navigate('Quiz', { deckId: deck.title });
+  };
+
   render() {
     const { deck } = this.props;
 
@@ -12,16 +18,8 @@ class DeckDetail extends Component {
       <View style={styles.container}>
         <View style={styles.deck}>
           <Deck deck={deck} />
-          <View>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Add card</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Start quiz</Text>
-            </TouchableOpacity>
-          </View>
+          <Button text="Add card" style={{ backgroundColor: gray }} />
+          <Button text="Start quiz" onPress={() => this.onPressQuiz()} />
         </View>
       </View>
     );
@@ -46,20 +44,6 @@ const styles = StyleSheet.create({
   numCardsText: {
     color: gray,
     fontSize: 20
-  },
-  button: {
-    backgroundColor: black,
-    borderRadius: 2,
-    height: 45,
-    justifyContent: 'center',
-    margin: 5,
-    padding: 10,
-    width: 160
-  },
-  buttonText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center'
   }
 });
 
@@ -67,7 +51,8 @@ function mapStateToProps(state, { navigation }) {
   const { id } = navigation.state.params;
 
   return {
-    deck: state[id]
+    deck: state[id],
+    navigation
   };
 }
 
