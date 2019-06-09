@@ -42,7 +42,7 @@ class NewDeck extends Component {
               style={styles.input}
               value={title}
               placeholder="Deck title"
-              onChangeText={(title) => this.onChangeTitle(title)}
+              onChangeText={(text) => this.onChangeTitle(text)}
             />
           </View>
           <View style={styles.buttonsContainer}>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     alignItems: 'center',
     backgroundColor: white,
-    marginTop: 30,
+    marginTop: 15,
     padding: 20
   }
 });
