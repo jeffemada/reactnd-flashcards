@@ -19,7 +19,7 @@ class DeckDetail extends Component {
         <View style={styles.deck}>
           <Deck deck={deck} />
           <Button text="Add card" style={{ backgroundColor: gray }} />
-          <Button text="Start quiz" onPress={() => this.onPressQuiz()} />
+          <Button text="Start quiz" onPress={this.onPressQuiz} disabled={deck.questions.length === 0} />
         </View>
       </View>
     );
