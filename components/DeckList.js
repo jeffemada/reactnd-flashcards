@@ -1,6 +1,6 @@
 import { AppLoading } from 'expo';
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { receiveDecks } from '../actions';
 import { getDecks } from '../utils/api';
@@ -14,7 +14,6 @@ class DeckList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-
     getDecks()
       .then((decks) => dispatch(receiveDecks(decks)))
       .then(() => this.setState(() => ({ loading: false })));
@@ -29,16 +28,28 @@ class DeckList extends Component {
     return <Deck deck={item} onPress={() => this.onPressDeck(item)} />;
   };
 
+  renderEmpty = () => {
+    return (
+      <View style={styles.empty}>
+        <View>
+          <Text style={{ fontSize: 20 }}>👋 Start creating NEW DECKS!</Text>
+        </View>
+      </View>
+    );
+  };
+
   render() {
     const { loading } = this.state;
     const { decks } = this.props;
 
     return loading ? (
       <AppLoading />
-    ) : (
+    ) : decks.length > 0 ? (
       <View style={styles.container}>
         <FlatList data={decks} renderItem={this.renderDeck} keyExtractor={(item) => item.title} />
       </View>
+    ) : (
+      this.renderEmpty()
     );
   }
 }
@@ -48,6 +59,12 @@ const styles = StyleSheet.create({
     backgroundColor: lightGray,
     flex: 1,
     padding: 15
+  },
+  empty: {
+    alignItems: 'center',
+    borderRadius: 2,
+    padding: 20,
+    marginTop: 10
   }
 });
 
