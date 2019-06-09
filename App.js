@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import Navigator from './components/Navigator';
 import middleware from './middleware';
 import reducers from './reducers';
+import { setLocalNotification } from './utils/api';
 import { black } from './utils/colors';
 
 function AppStatusBar({ backgroundColor, ...props }) {
@@ -18,7 +19,7 @@ function AppStatusBar({ backgroundColor, ...props }) {
 
 export default class App extends React.Component {
   componentDidMount() {
-    //TODO implementar notificações
+    setLocalNotification();
   }
   render() {
     return (

@@ -1,60 +1,37 @@
+import { Notifications, Permissions } from 'expo';
 import { AsyncStorage } from 'react-native';
+import { createNotification } from './helpers';
 
 const DECKS_STORAGE_KEY = 'Flashcards:decks';
+const NOTIFICATION_KEY = 'Flashcards:notifications';
 
-export async function mockDecks() {
-  return {
-    React: {
-      title: 'React',
-      questions: [
-        {
-          question: 'What is React?',
-          answer: 'A library for managing user interfaces'
-        },
-        {
-          question: 'Where do you make Ajax requests in React?',
-          answer: 'The componentDidMount lifecycle event'
-        }
-      ]
-    },
-    JavaScript: {
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    }
-  };
+export function clearLocalData() {
+  return AsyncStorage.removeItem(DECKS_STORAGE_KEY);
 }
 
-export async function getDecks() {
-  return await AsyncStorage.getItem(DECKS_STORAGE_KEY).then((decks) => {
+export function getDecks() {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((decks) => {
     return decks === null ? null : JSON.parse(decks);
   });
 }
 
-export async function getDeck(id) {
-  return await AsyncStorage.getItem(DECKS_STORAGE_KEY).then((decks) => {
+export function getDeck(id) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((decks) => {
     return decks === null ? null : JSON.parse(decks)[id];
   });
 }
 
-export async function saveDeck(id, title) {
-  return await AsyncStorage.mergeItem(
+export function saveDeck(deck) {
+  return AsyncStorage.mergeItem(
     DECKS_STORAGE_KEY,
     JSON.stringify({
-      [id]: {
-        title,
-        questions: []
-      }
+      [deck.title]: deck
     })
   );
 }
 
-export async function addCardToDeck(deckId, card) {
-  return await AsyncStorage.getItem(DECKS_STORAGE_KEY).then((decks) => {
+export function addCardToDeck(deckId, card) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((decks) => {
     const deck = JSON.parse(decks)[deckId];
     deck.questions.push(card);
     AsyncStorage.mergeItem(
@@ -64,4 +41,33 @@ export async function addCardToDeck(deckId, card) {
       })
     );
   });
+}
+
+export function clearLocalNotification() {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(Notifications.cancelAllScheduledNotificationsAsync);
+}
+
+export function setLocalNotification() {
+  AsyncStorage.getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data === null) {
+        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+          if (status === 'granted') {
+            Notifications.cancelAllScheduledNotificationsAsync();
+
+            let tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(13, 35, 0, 0);
+
+            Notifications.scheduleLocalNotificationAsync(createNotification(), {
+              time: tomorrow,
+              repeat: 'day'
+            });
+
+            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+          }
+        });
+      }
+    });
 }

@@ -2,6 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
+import { clearLocalNotification, setLocalNotification } from '../utils/api';
 import { black, gray, green, red, white } from '../utils/colors';
 import Button from './Button';
 
@@ -37,6 +38,7 @@ class Quiz extends Component {
         numCorrectAnswers: state.numCorrectAnswers + 1,
         showScore: true
       }));
+      clearLocalNotification().then(setLocalNotification());
     } else {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
@@ -51,6 +53,7 @@ class Quiz extends Component {
       this.setState((state) => ({
         showScore: true
       }));
+      clearLocalNotification().then(setLocalNotification());
     } else {
       this.setState((state) => ({
         currentQuestion: state.currentQuestion + 1,
