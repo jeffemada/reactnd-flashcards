@@ -160,7 +160,6 @@ function mapStateToProps(state, { navigation }) {
 
   return {
     questions,
-    navigation,
     totalQuestions: questions.length
   };
 }
