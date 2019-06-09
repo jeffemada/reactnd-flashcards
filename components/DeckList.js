@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { receiveDecks } from '../actions';
-import { mockDecks } from '../utils/api';
+import { getDecks } from '../utils/api';
 import { lightGray } from '../utils/colors';
 import Deck from './Deck';
 
@@ -15,7 +15,7 @@ class DeckList extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
 
-    mockDecks()
+    getDecks()
       .then((decks) => dispatch(receiveDecks(decks)))
       .then(() => this.setState(() => ({ loading: false })));
   }
