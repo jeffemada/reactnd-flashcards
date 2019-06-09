@@ -3,6 +3,7 @@ import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator
 import { black, white } from '../utils/colors';
 import DeckDetail from './DeckDetail';
 import DeckList from './DeckList';
+import NewCard from './NewCard';
 import NewDeck from './NewDeck';
 import Quiz from './Quiz';
 
@@ -51,6 +52,15 @@ const Navigator = createStackNavigator({
   },
   Quiz: {
     screen: Quiz,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black
+      }
+    }
+  },
+  NewCard: {
+    screen: NewCard,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {

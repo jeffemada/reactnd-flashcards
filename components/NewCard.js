@@ -1,24 +1,75 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { black, gray, white } from '../utils/colors';
+import { KeyboardAvoidingView, StyleSheet, TextInput, View } from 'react-native';
+import { connect } from 'react-redux';
+import { addCard } from '../actions';
+import { addCardToDeck } from '../utils/api';
+import { gray, white } from '../utils/colors';
+import Button from './Button';
 
 class NewCard extends Component {
+  state = {
+    answer: '',
+    question: ''
+  };
+
+  onChangeQuestion = (question) => {
+    this.setState(() => ({
+      question
+    }));
+  };
+
+  onChangeAnswer = (answer) => {
+    this.setState(() => ({
+      answer
+    }));
+  };
+
+  isOk = () => {
+    const { answer, question } = this.state;
+    return question && question.trim() && answer && answer.trim();
+  };
+
+  onSubmit = () => {
+    const { deckId, dispatch, navigation } = this.props;
+    const card = this.state;
+
+    addCardToDeck(deckId, card)
+      .then(() => dispatch(addCard(deckId, card)))
+      .then(() => navigation.navigate('DeckDetail', { id: deckId }))
+      .then(() =>
+        this.setState({
+          answer: '',
+          question: ''
+        })
+      );
+  };
+
   render() {
+    const { answer, question } = this.state;
+
     return (
       <View style={styles.container}>
-        <View style={styles.newCard}>
+        <KeyboardAvoidingView behavior="padding" style={styles.newCard}>
           <View>
-            <TextInput style={styles.input} placeholder="Question" />
+            <TextInput
+              value={question}
+              style={styles.input}
+              placeholder="Question"
+              onChangeText={(text) => this.onChangeQuestion(text)}
+            />
           </View>
           <View>
-            <TextInput style={styles.input} placeholder="Answer" />
+            <TextInput
+              value={answer}
+              style={styles.input}
+              placeholder="Answer"
+              onChangeText={(text) => this.onChangeAnswer(text)}
+            />
           </View>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
+            <Button text="Submit" onPress={this.onSubmit} disabled={!this.isOk()} />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -49,23 +100,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: white,
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: 15,
     padding: 20
-  },
-  button: {
-    backgroundColor: black,
-    borderRadius: 2,
-    height: 45,
-    justifyContent: 'center',
-    margin: 5,
-    padding: 10,
-    width: 160
-  },
-  buttonText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center'
   }
 });
 
-export default NewCard;
+function mapStateToProps(state, { navigation }) {
+  const { deckId } = navigation.state.params;
+
+  return {
+    deckId
+  };
+}
+
+export default connect(mapStateToProps)(NewCard);

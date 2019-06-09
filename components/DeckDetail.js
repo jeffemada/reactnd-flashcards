@@ -11,6 +11,11 @@ class DeckDetail extends Component {
     navigation.navigate('Quiz', { deckId: deck.title });
   };
 
+  onPressAddCard = () => {
+    const { deck, navigation } = this.props;
+    navigation.navigate('NewCard', { deckId: deck.title });
+  };
+
   render() {
     const { deck } = this.props;
 
@@ -18,7 +23,7 @@ class DeckDetail extends Component {
       <View style={styles.container}>
         <View style={styles.deck}>
           <Deck deck={deck} />
-          <Button text="Add card" style={{ backgroundColor: gray }} />
+          <Button text="Add card" style={{ backgroundColor: gray }} onPress={this.onPressAddCard} />
           <Button text="Start quiz" onPress={this.onPressQuiz} disabled={deck.questions.length === 0} />
         </View>
       </View>
@@ -51,8 +56,7 @@ function mapStateToProps(state, { navigation }) {
   const { id } = navigation.state.params;
 
   return {
-    deck: state[id],
-    navigation
+    deck: state[id]
   };
 }
 
