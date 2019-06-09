@@ -22,7 +22,7 @@ class Quiz extends Component {
   getScore = () => {
     const { numCorrectAnswers } = this.state;
     const { totalQuestions } = this.props;
-    return (numCorrectAnswers / totalQuestions) * 100;
+    return Math.round((numCorrectAnswers / totalQuestions) * 100);
   };
 
   onPressAnswer = () => {
