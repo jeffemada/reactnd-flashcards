@@ -35,7 +35,7 @@ class NewCard extends Component {
 
     addCardToDeck(deckId, card)
       .then(() => dispatch(addCard(deckId, card)))
-      .then(() => navigation.navigate('DeckDetail', { id: deckId }))
+      .then(() => navigation.goBack())
       .then(() =>
         this.setState({
           answer: '',
