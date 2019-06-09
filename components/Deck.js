@@ -1,9 +1,25 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { gray, white } from '../utils/colors';
 
 class Deck extends Component {
+  state = {
+    bounceValue: new Animated.Value(1)
+  };
+
+  onPressDeck = () => {
+    const { bounceValue } = this.state;
+    const { onPress } = this.props;
+
+    Animated.sequence([
+      Animated.timing(bounceValue, { duration: 200, toValue: 1.04 }),
+      Animated.spring(bounceValue, { toValue: 1, friction: 4 })
+    ]).start(() => {
+      onPress();
+    });
+  };
+
   renderDeck = (deck) => {
     return (
       <View style={styles.deck}>
@@ -20,7 +36,13 @@ class Deck extends Component {
   };
 
   renderPressableDeck = (deck, onPress) => {
-    return <TouchableOpacity onPress={onPress}>{this.renderDeck(deck)}</TouchableOpacity>;
+    const { bounceValue } = this.state;
+
+    return (
+      <TouchableWithoutFeedback onPress={this.onPressDeck}>
+        <Animated.View style={{ transform: [{ scale: bounceValue }] }}>{this.renderDeck(deck)}</Animated.View>
+      </TouchableWithoutFeedback>
+    );
   };
 
   render() {
