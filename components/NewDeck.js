@@ -1,24 +1,54 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { black, gray, white } from '../utils/colors';
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { connect } from 'react-redux';
+import { addDeck } from '../actions';
+import { saveDeck } from '../utils/api';
+import { gray, white } from '../utils/colors';
+import Button from './Button';
 
 class NewDeck extends Component {
+  state = {
+    title: '',
+    questions: []
+  };
+
+  onChangeTitle = (title) => {
+    this.setState(() => ({
+      title
+    }));
+  };
+
+  onSubmit = () => {
+    const { dispatch, navigation } = this.props;
+    const deck = this.state;
+
+    saveDeck(deck)
+      .then(() => dispatch(addDeck(deck)))
+      .then(() => navigation.navigate('DeckDetail', { id: deck.title }))
+      .then(() => this.setState({ title: '' }));
+  };
+
   render() {
+    const { title } = this.state;
+
     return (
       <View style={styles.container}>
-        <View style={styles.newDeck}>
+        <KeyboardAvoidingView behavior="padding" style={styles.newDeck}>
           <View>
             <Text style={styles.question}>What is the title of your new deck?</Text>
           </View>
           <View>
-            <TextInput style={styles.input} placeholder="Deck title" />
+            <TextInput
+              style={styles.input}
+              value={title}
+              placeholder="Deck title"
+              onChangeText={(title) => this.onChangeTitle(title)}
+            />
           </View>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
+            <Button text="Submit" onPress={this.onSubmit} disabled={!title || !title.trim()} />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -54,21 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: white,
     marginTop: 30,
     padding: 20
-  },
-  button: {
-    backgroundColor: black,
-    borderRadius: 2,
-    margin: 5,
-    height: 45,
-    justifyContent: 'center',
-    padding: 10,
-    width: 160
-  },
-  buttonText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center'
   }
 });
 
-export default NewDeck;
+export default connect()(NewDeck);

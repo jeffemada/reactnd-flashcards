@@ -1,8 +1,9 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import { black, white } from '../utils/colors';
 import DeckDetail from './DeckDetail';
 import DeckList from './DeckList';
+import NewDeck from './NewDeck';
 import Quiz from './Quiz';
 
 const TabsNavigator = createMaterialTopTabNavigator(
@@ -11,7 +12,14 @@ const TabsNavigator = createMaterialTopTabNavigator(
       screen: DeckList,
       navigationOptions: {
         tabBarLabel: 'Decks',
-        tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name="cards" size={30} color={tintColor} />
+        tabBarIcon: ({ tintColor }) => <Ionicons name="md-play" size={30} color={tintColor} />
+      }
+    },
+    NewDeck: {
+      screen: NewDeck,
+      navigationOptions: {
+        tabBarLabel: 'New deck',
+        tabBarIcon: ({ tintColor }) => <Ionicons name="md-add" size={30} color={tintColor} />
       }
     }
   },

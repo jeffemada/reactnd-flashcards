@@ -2,9 +2,13 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { black, white } from '../utils/colors';
 
-function Button({ onPress, style = { backgroundColor: black }, text }) {
+function Button({ disabled = false, onPress, style = { backgroundColor: black }, text }) {
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.button, style, disabled && { opacity: 0.7 }]}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
